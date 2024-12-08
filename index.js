@@ -7,6 +7,8 @@ import session from 'express-session';
 // ROUTES
 import AuthRoutes from './routes/auth.js';
 import ProductsRoutes from './routes/products.js';
+import varMiddleware from './middleware/var.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -21,8 +23,10 @@ app.set('views', './views');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 app.use(session({ secret: 'Sammi', resave: false, saveUninitialized: false }));
 app.use(flash());
+app.use(varMiddleware);
 
 app.use(AuthRoutes);
 app.use(ProductsRoutes);
